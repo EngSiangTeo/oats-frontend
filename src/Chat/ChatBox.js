@@ -14,11 +14,13 @@ export default ({ text, username, handleTextChange }) => (
             onChange={handleTextChange}
             onKeyDown={handleTextChange}
           />
+          <br/>
+          <br/>
+          <br/>
         </div>
         <div className="clearfix"></div>
       </div>
     </div>
-    <h4 className="greetings">Hello, {username}</h4>
   </div>
 </div>
 );
