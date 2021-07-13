@@ -9,10 +9,11 @@ export default ({ chats }) => (
             <div className="col-xs-12">
               <div className="chatMessage">
                 <div className="box">
+                  <p><b>{chat.username}</b></p>
                   <p>{chat.message}</p>
                 </div>
                 <div className="imageHolder">
-                {/*<img src={avatar} className="img-responsive avatar" alt="logo" />*/}
+                {/*{<img src={avatar} className="img-responsive avatar" alt="logo" />}*/}
                 </div>
               </div>
             </div>
