@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 async function loginUser(credentials) {
-  console.log(credentials);
  return fetch(process.env.REACT_APP_BE_URL + 'loginByEmail', {
    method: 'POST',
    headers: {
