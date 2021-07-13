@@ -21,8 +21,8 @@ export default function Login({ setToken }) {
   const handleSubmit = async e => {
     e.preventDefault();
     const token = await loginUser({
-      "email" : 'test4@email.com',
-      "password" : 'password'
+      "email" : username,
+      "password" : password
     });
     setToken(token.access_token);
   }
