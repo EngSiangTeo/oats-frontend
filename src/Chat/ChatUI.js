@@ -9,21 +9,18 @@ class ChatUI extends Component {
     super(props);
     this.state = {
       text: '',
-      chats: [{'username':'j','message':'hi'}]
+      chats: []
     };
   }
   
   componentDidMount() {
-    // console.log(this.props.token);
-    // const username = window.prompt('Username: ', 'Anonymous');
-    // this.setState({ username });
-
     //Connect and subscribe to PUSHER API
+    // console.log(this.props.chatId);
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
       cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
       encrypted: true
     });
-    const channel = pusher.subscribe('chat');
+    const channel = pusher.subscribe('chat'+this.props.chatId);
     channel.bind('MessageSent', data => {
       // console.log(data);
       this.setState({ chats: [...this.state.chats, data], handleTextChanget: '' });
@@ -33,27 +30,27 @@ class ChatUI extends Component {
     //Get all chat history
 
     var self = this;
-    axios.get(process.env.REACT_APP_BE_URL + 'message', {
+    axios.get(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, {
         headers: {
           'Authorization': `Bearer ${this.props.token}` 
         }
       }).then(function(response){
-        // self.setState({ text: ""});
-        console.log(response.data.data);
-        self.setState({ chats: [...response.data.data]});
+        if(response.data.data.messages.length){
+          self.setState({ chats: [...response.data.data.messages]});          
+        }
       });
 
     //Binding events
     this.handleTextChange = this.handleTextChange.bind(this);
   }
   
-  handleTextChange(e) {
+  handleTextChange = (e) =>{
     if (e.keyCode === 13) {
       const payload = {
         message: this.state.text
       };
 
-      axios.post(process.env.REACT_APP_BE_URL + 'message', payload, {
+      axios.post(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, payload, {
         headers: {
           'Authorization': `Bearer ${this.props.token}` 
           // 'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}` 
@@ -78,33 +75,3 @@ class ChatUI extends Component {
 }
 
 export default ChatUI;
-
-// import React, { useState } from 'react';
-// import './App.css';
-// import { BrowserRouter, Route, Switch } from 'react-router-dom';
-// import Chat from './Chat/Chat';
-// import Login from './Common/Login';
-
-// function App() {
-//   const [token, setToken] = useState();
-
-//   if(!token) {
-//     return <Login setToken={setToken} />
-//   }
-  
-//   return (
-//     <div className="wrapper">
-//       <h1>Application</h1>
-//       <a href="chat">Chat</a>
-//       <BrowserRouter>
-//         <Switch>
-//           <Route path="/chat">
-//             <Chat />
-//           </Route>
-//         </Switch>
-//       </BrowserRouter>
-//     </div>
-//   );
-// }
-
-// export default App;
