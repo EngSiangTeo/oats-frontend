@@ -56,6 +56,17 @@ class ChatUI extends Component {
           // 'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}` 
         }
       });
+
+      const message = {
+        text: this.state.text
+      };
+      
+      axios.get(process.env.REACT_APP_SENTIMENT_URL + 'SentimentAnalysisOats', 
+          message
+        ).then(function(response){
+          console.log(response);
+        });
+
     } else {
       this.setState({ text: e.target.value });
     }
