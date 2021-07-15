@@ -31,11 +31,8 @@ class ProductList extends Component {
         'Authorization': `Bearer ${this.props.token}` 
       }
     }).then(function(response){
-      // self.setState({ products: [...response.data.data]});
-      console.log(response);
-      // self.props.setActive('chat')
+      self.props.setActive('chat', response.data.data.chat_id)
     });
-    // this.props.setActive('chat',id);
   }
 
   render() {
@@ -45,7 +42,7 @@ class ProductList extends Component {
             return (
               <div key={product.listing_id}>
                 <p><b>Deprioritized: {product.deprioritized.toString()}</b></p>
-                <p>Product: {product.listing_id}</p>
+                <p>Product Id: {product.listing_id}</p>
                 <p>Title: {product.title}</p>
                 <p>Description: {product.description}</p>
                 <p>Category: {product.category}</p>

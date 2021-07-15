@@ -57,6 +57,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
+          <h3>Navbar</h3>
           {/*<h1 className="App-title">Navbar or something</h1>*/}
           <NavBar setActive={this.setActive}/>
         </header>
