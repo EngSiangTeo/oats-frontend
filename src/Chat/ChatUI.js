@@ -9,6 +9,7 @@ class ChatUI extends Component {
     super(props);
     this.state = {
       text: '',
+      productId : '',
       chats: []
     };
   }
@@ -23,12 +24,11 @@ class ChatUI extends Component {
     const channel = pusher.subscribe('chat'+this.props.chatId);
     channel.bind('MessageSent', data => {
       // console.log(data);
-      this.setState({ chats: [...this.state.chats, data], handleTextChanget: '' });
+      this.setState({ chats: [...this.state.chats, data] });
       // console.log(this.state.chats);
     });
 
     //Get all chat history
-
     var self = this;
     axios.get(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, {
         headers: {
@@ -36,7 +36,7 @@ class ChatUI extends Component {
         }
       }).then(function(response){
         if(response.data.data.messages.length){
-          self.setState({ chats: [...response.data.data.messages]});          
+          self.setState({ chats: [...response.data.data.messages], productId : response.data.data.listing_id});          
         }
       });
 
@@ -50,25 +50,29 @@ class ChatUI extends Component {
         message: this.state.text
       };
 
-      axios.post(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, payload, {
-        headers: {
-          'Authorization': `Bearer ${this.props.token}` 
-          // 'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}` 
-        }
-      });
-
       const message = {
         body : {
           "text": this.state.text
         }
       };
+      
+      var self = this;
+      
+      //Send to BE for BROADCAST
+      axios.post(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, payload, {
+        headers: {
+          'Authorization': `Bearer ${this.props.token}` 
+        }
+      }).then(function(response){
+        self.setState({ text : ''})
+      });
 
+      //Send to Lambda for analysis
       axios.put(process.env.REACT_APP_SENTIMENT_URL, message, {
         headers : {
           'Content-Type': 'application/json'
         }
       }).then(function(response){
-          console.log(response);
           if (response.data.body.Sentiment === "NEGATIVE") {
             alert('Negative Message Detected');
           }
@@ -82,6 +86,8 @@ class ChatUI extends Component {
   render() {
     return (
         <section>
+          <h2>Chat Id <b>{this.props.chatId}</b></h2>
+          <h2>Product Id <b>{this.state.productId}</b></h2>
           <ChatList chats={this.state.chats} />
           <ChatBox
             text={this.state.text}
