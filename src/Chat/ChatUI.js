@@ -58,11 +58,20 @@ class ChatUI extends Component {
       });
 
       const message = {
-        text: this.state.text
+        body : {
+          "text": this.state.text
+        }
       };
 
-      axios.post(process.env.REACT_APP_SENTIMENT_URL, message).then(function(response){
+      axios.put(process.env.REACT_APP_SENTIMENT_URL, message, {
+        headers : {
+          'Content-Type': 'application/json'
+        }
+      }).then(function(response){
           console.log(response);
+          if (response.data.body.Sentiment === "NEGATIVE") {
+            alert('Negative Message Detected');
+          }
         });
 
     } else {
