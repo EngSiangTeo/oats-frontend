@@ -60,10 +60,8 @@ class ChatUI extends Component {
       const message = {
         text: this.state.text
       };
-      
-      axios.get(process.env.REACT_APP_SENTIMENT_URL + 'SentimentAnalysisOats', 
-          message
-        ).then(function(response){
+
+      axios.post(process.env.REACT_APP_SENTIMENT_URL, message).then(function(response){
           console.log(response);
         });
 
