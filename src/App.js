@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
 import ChatUI from './Chat/ChatUI';
-import Login from './Common/Login';
-import NavBar from './Common/NavBar';
+import NavBar from './Common/Nav';
+import SignInSide from './Common/SignInSide';
 import ProductList from './Product/ProductList';
 import ConversationList from './Conversation/ConversationList';
-
 
 class App extends React.Component {
 
@@ -50,18 +49,19 @@ class App extends React.Component {
   render() {
     if (!this.state.token) {
       return (
-        <Login setToken={this.setToken} setActive={this.setActive}/>
+        <SignInSide setToken={this.setToken} setActive={this.setActive}/>
       );
     }
     
     return (
       <div className="App">
         <header className="App-header">
-          <h3>Navbar</h3>
           {/*<h1 className="App-title">Navbar or something</h1>*/}
           <NavBar setActive={this.setActive}/>
         </header>
-        {this.renderContent()}
+        <div className="App-content">
+          {this.renderContent()}
+        </div>
       </div>
     );
 
