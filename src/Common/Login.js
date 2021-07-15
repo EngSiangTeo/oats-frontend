@@ -24,7 +24,7 @@ export default function Login({ setToken, setActive }) {
       "password" : password
     });
     setToken(token.access_token);
-    setActive('conversation');
+    setActive('product');
   }
 
   return(

@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import ChatUI from './Chat/ChatUI';
 import Login from './Common/Login';
+import NavBar from './Common/NavBar';
+import ProductList from './Product/ProductList';
 import ConversationList from './Conversation/ConversationList';
 
 
@@ -38,6 +40,10 @@ class App extends React.Component {
       return (
         <ConversationList token={this.state.token} setActive={this.setActive}/>
       );
+    } else if (this.state.active === "product") {
+      return (
+        <ProductList token={this.state.token} setActive={this.setActive}/>
+      );
     }
   }
 
@@ -51,7 +57,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Navbar or something</h1>
+          {/*<h1 className="App-title">Navbar or something</h1>*/}
+          <NavBar setActive={this.setActive}/>
         </header>
         {this.renderContent()}
       </div>
