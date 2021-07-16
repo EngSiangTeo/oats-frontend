@@ -1,0 +1,12 @@
+.inboxSector{
+	padding: 20px;
+	height: 620px;
+}
+
+.chatBtn{
+	float: right;
+}
+
+.clearfix {
+  overflow: auto;
+}

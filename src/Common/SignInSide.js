@@ -79,7 +79,7 @@ export default function SignInSide({ setToken, setActive }) {
       "password" : password
     });
     setToken(token.access_token);
-    setActive('product');
+    setActive('conversation');
   }
 
   const classes = useStyles();

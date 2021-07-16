@@ -37,7 +37,7 @@ class App extends React.Component {
       );
     } else if (this.state.active === "conversation") {
       return (
-        <ConversationList token={this.state.token} setActive={this.setActive}/>
+        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId}/>
       );
     } else if (this.state.active === "product") {
       return (
