@@ -12,37 +12,54 @@ class ChatUI extends Component {
       productId : '',
       chats: []
     };
-  }
-  
-  componentDidMount() {
-    //Connect and subscribe to PUSHER API
-    // console.log(this.props.chatId);
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+
+    this.pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
       cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
       encrypted: true
     });
-    const channel = pusher.subscribe('chat'+this.props.chatId);
+
+    const channel = this.pusher.subscribe('chat'+this.props.chatId);
     channel.bind('MessageSent', data => {
       // console.log(data);
       this.setState({ chats: [...this.state.chats, data] });
       // console.log(this.state.chats);
     });
 
+  }
+
+  componentDidMount() {
+    //Connect and subscribe to PUSHER API
+    console.log(this.props.chatId);
+    console.log('hi');
+
     //Get all chat history
     var self = this;
     axios.get(process.env.REACT_APP_BE_URL + 'message/' + this.props.chatId, {
-        headers: {
-          'Authorization': `Bearer ${this.props.token}` 
-        }
-      }).then(function(response){
-        if(response.data.data.messages.length){
-          self.setState({ chats: [...response.data.data.messages], productId : response.data.data.listing_id});          
-        }
-      });
+      headers: {
+        'Authorization': `Bearer ${this.props.token}` 
+      }
+    }).then(function(response){
+        self.setState({ productId : response.data.data.listing_id});  
+      if(response.data.data.messages.length){
+        self.setState({ chats: [...response.data.data.messages]});          
+      }
+    });
 
     //Binding events
     this.handleTextChange = this.handleTextChange.bind(this);
   }
+
+  componentWillUnmount() {
+    //Connect and subscribe to PUSHER API
+    console.log(this.props.chatId);
+    console.log('bue');
+    console.log(this.pusher);
+
+    this.pusher.unsubscribe('chat'+this.props.chatId);
+
+    console.log(this.pusher);
+  }
+
   
   handleTextChange = (e) =>{
     if (e.keyCode === 13) {
@@ -85,7 +102,7 @@ class ChatUI extends Component {
 
   render() {
     return (
-        <section>
+        <div>
           <h2>Chat Id <b>{this.props.chatId}</b></h2>
           <h2>Product Id <b>{this.state.productId}</b></h2>
           <ChatList chats={this.state.chats} />
@@ -93,7 +110,7 @@ class ChatUI extends Component {
             text={this.state.text}
             handleTextChange={this.handleTextChange}
           />
-        </section>
+        </div>
     );
   }
 }
