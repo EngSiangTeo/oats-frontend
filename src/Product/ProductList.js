@@ -6,18 +6,32 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import red from '@material-ui/core/colors/red';
 import images from "./images";
+import TextTruncate from 'react-text-truncate'; // recommend
+import ReactTimeAgo from 'react-time-ago';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import { red } from '@material-ui/core/colors';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import { right } from '@material-ui/system';
+
+TimeAgo.addDefaultLocale(en);
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexGrow: 1
   },
 }));
 
@@ -60,21 +74,33 @@ class ProductList extends Component {
 
 
   render() {
-    const theme = createTheme({
-      palette: {
-        primary: red,
-      },
-    });
+
     const styles = {
         card: {
           minWidth:100,
-          maxWidth: 365,
-          padding: theme.spacing(2),
-          textAlign: 'center',
-          color: theme.palette.secondary.dark,
+          maxWidth: 300,
+          height: 565,
+          padding: 2,
+          textAlign: 'start',
           media: {
-            height: 200,
-          }
+            height: "100%",
+            width: "100%"
+          },
+          position: "relative"
+        },
+        avatar: {
+          backgroundColor: red[500],
+        },
+        actions: {
+          display: "flex",
+          bottom: 0,
+          position: "absolute",
+        },
+        chat: {
+          display:"flex",
+          right: 0,
+          bottom:0,
+          position: "absolute",
         }
       };
     return (
@@ -83,39 +109,50 @@ class ProductList extends Component {
           {this.state.products.map(product => {
             let image = images["p" + product.listing_id];
             return (
-                  <Grid item xs={12} sm={4} key={product.listing_id}>
+                  <Grid item xs={12} sm={3} key={product.listing_id}>
                     <Card className={String(product.listing_id)} style = {styles.card}>
                       <CardActionArea>
+                        <CardHeader
+                          avatar={
+                            <Avatar aria-label="User" style={styles.avatar}>
+                              {product.username.substring(0, 1)}
+                            </Avatar>
+                          }
+                          title={product.username}
+                          subheader={<ReactTimeAgo date={Date.parse(product.listed_date)} locale="en-US" timeStyle="round-minute" />}
+                          action={
+                            <IconButton aria-label="share">
+                              <ShareIcon />
+                            </IconButton>
+                          }
+                        />
                         <CardMedia
                           component = "img"
                           className={String(product.listing_id)}
                           title={product.title}
                           style = {styles.card.media}
                           image = {image}
-                          
                         >
                         </CardMedia>
                         <CardContent>
-                          <Typography gutterBottom variant="h3" component="h2">
-                            {product.title}
+                          <TextTruncate line = {1} truncateText="…" text = {product.title} element = "h5" />                            
+                          <Typography variant="h5">
+                            <b>${product.price}</b><br></br>
                           </Typography>
-                          <Typography variant="h4" color="textPrimary" component="h4">
-                            ${product.price}<br></br>
-                            Category: {product.category}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
-                            {product.description}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
-                            Listing By: {product.username}<br></br>
-                            Listed Date: {product.listed_date}
-                          </Typography>
+                          <TextTruncate line = {3} truncateText="…" text = {product.category} element = "p" />
+                          <TextTruncate line = {3} truncateText="…" text = {product.description} element = "p" />
                         </CardContent>
                       </CardActionArea>
-                      <CardActions>
-                        <Button size="small" color="primary" onClick={this.handleChatClick.bind(this,product.listing_id)}>
-                          Chat
-                        </Button>
+                      <div className={"flex-grow"} />
+                      <CardActions disableSpacing style = {styles.actions}>
+                        <IconButton aria-label="add to favorites">
+                          <FavoriteIcon />
+                        </IconButton>
+                      </CardActions>
+                      <CardActions disableSpacing style={styles.chat}>
+                        <IconButton aria-label="share" onClick={this.handleChatClick.bind(this,product.listing_id)}>
+                          <ChatBubbleIcon />
+                        </IconButton>
                       </CardActions>
                     </Card>
                   </Grid>
