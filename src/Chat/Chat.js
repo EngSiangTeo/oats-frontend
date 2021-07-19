@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import Pusher from 'pusher-js';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { red } from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import TextTruncate from 'react-text-truncate'; // recommend
 
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
@@ -38,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Chat(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const [text, setText] = useState('');
   const [seller, setSeller] = useState('');
   const [chats, setChats] = useState([]);
@@ -75,10 +71,19 @@ export default function Chat(props) {
           'Content-Type': 'application/json',
         }
       }).then(function(response){
-          if (response.data.body.Sentiment === "NEGATIVE") {
-            alert('Negative Message Detected');
-          }
-        });
+        if (response.data.body.Sentiment === "NEGATIVE") {
+          alert('Negative Message Detected');
+        }
+      });
+
+      //Send to Lambda to check if offer
+      axios.post(process.env.REACT_APP_ENTITIES_URL, message, {
+        headers : {
+          'Content-Type': 'application/json'
+        }
+      }).then(function(response){
+        console.log(response)
+      });
 
     } else {
       setText(e.target.value);
