@@ -18,19 +18,20 @@ class ChatList extends React.Component {
 
   render() {
     return (
-      <Scrollbars ref={this.scrollbars} style={{height:500}} className="chatList">
-        {this.props.chats.map(chat => {
-          return (
-            <div key={chat.id}>
-              <div className="chatMessage">
-                <div className="box">
-                  <p><b>{chat.username}</b></p>
-                  <p>{chat.message}</p>
+      <Scrollbars ref={this.scrollbars}>
+        <div className="container" className="chatList">
+          {this.props.chats.map(chat => {
+            return (
+              <div key={chat.id} className="row">
+                <div className={`chatMessage ${chat.own_message ? "own" : "other"}`}>
+                  <div className="box">
+                    {chat.message}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </Scrollbars>
     );
   }

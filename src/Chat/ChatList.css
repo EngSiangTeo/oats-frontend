@@ -1,17 +1,26 @@
 .chatList{
-  border: 1px solid grey;
+  padding: 0px 35px;
 }
 
 .chatMessage {
   position: relative;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-top: 20px;
-  width: 700px;
+  margin-bottom: 20px;
   display: table;
 }
+
 .box {
+  padding: 3px 8px;
+  border-radius: 25%;
+}
+
+.own {
+  margin-left: auto !important;
+  background-color: #0566cd !important;
+  color: white;
+}
+
+.other{
   background-color: #ffffff;
-  padding: 20px;
-  border-bottom: 1px solid #cccccc;
 }

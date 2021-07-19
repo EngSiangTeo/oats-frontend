@@ -1,6 +1,6 @@
 .inboxSector{
 	padding: 20px;
-	height: 620px;
+	height: 89vmin;
 }
 
 .chatBtn{
@@ -9,4 +9,8 @@
 
 .clearfix {
   overflow: auto;
+}
+
+.active {
+	background-color: #88baef !important;
 }
