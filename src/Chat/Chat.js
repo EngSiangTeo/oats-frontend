@@ -76,15 +76,6 @@ export default function Chat(props) {
         }
       });
 
-      //Send to Lambda to check if offer
-      axios.post(process.env.REACT_APP_ENTITIES_URL, message, {
-        headers : {
-          'Content-Type': 'application/json'
-        }
-      }).then(function(response){
-        console.log(response)
-      });
-
     } else {
       setText(e.target.value);
     }
