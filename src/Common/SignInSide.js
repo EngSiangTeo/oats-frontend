@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Pusher from 'pusher-js';
 
 function Copyright() {
   return (
@@ -67,7 +68,7 @@ async function loginUser(credentials) {
    .then(data => data.json());
 }
 
-export default function SignInSide({ setToken, setActive }) {
+export default function SignInSide({ setToken, setActive, setPusher }) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -78,8 +79,19 @@ export default function SignInSide({ setToken, setActive }) {
       "email" : username,
       "password" : password
     });
-    setToken(token.access_token);
-    setActive('conversation');
+
+    if (token.errors){
+      console.log('Error Logging In');
+    }else {
+      setToken(token.access_token);
+      setActive('product');
+
+      let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+        cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
+        encrypted: true
+      });
+      setPusher(pusher);
+    }
   }
 
   const classes = useStyles();

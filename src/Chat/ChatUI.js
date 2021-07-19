@@ -3,6 +3,7 @@ import axios from 'axios';
 import Pusher from 'pusher-js';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
+import './ChatUI.css';
 
 class ChatUI extends Component {
   constructor(props) {
@@ -13,17 +14,17 @@ class ChatUI extends Component {
       chats: []
     };
 
-    this.pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-      cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
-      encrypted: true
-    });
+    // this.pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+    //   cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
+    //   encrypted: true
+    // });
 
-    const channel = this.pusher.subscribe('chat'+this.props.chatId);
-    channel.bind('MessageSent', data => {
-      // console.log(data);
-      this.setState({ chats: [...this.state.chats, data] });
-      // console.log(this.state.chats);
-    });
+    // const channel = this.pusher.subscribe('chat'+this.props.chatId);
+    // channel.bind('MessageSent', data => {
+    //   // console.log(data);
+    //   this.setState({ chats: [...this.state.chats, data] });
+    //   // console.log(this.state.chats);
+    // });
 
   }
 
@@ -50,14 +51,14 @@ class ChatUI extends Component {
   }
 
   componentWillUnmount() {
-    //Connect and subscribe to PUSHER API
-    console.log(this.props.chatId);
+    //Unsubscribe to PUSHER API
+    // console.log(this.props.chatId);
     console.log('bue');
-    console.log(this.pusher);
+    // console.log(this.pusher);
 
-    this.pusher.unsubscribe('chat'+this.props.chatId);
+    // this.pusher.unsubscribe('chat'+this.props.chatId);
 
-    console.log(this.pusher);
+    // console.log(this.pusher);
   }
 
   
@@ -102,15 +103,20 @@ class ChatUI extends Component {
 
   render() {
     return (
-        <div>
-          <h2>Chat Id <b>{this.props.chatId}</b></h2>
-          <h2>Product Id <b>{this.state.productId}</b></h2>
+      <div className="ChatUI">
+        <div className="ChatTitle">
+          {<h2>Product Id <b>{this.state.productId}</b></h2>}
+        </div>
+        <div className="ChatList">
           <ChatList chats={this.state.chats} />
+        </div>
+        <div className="ChatBox">
           <ChatBox
             text={this.state.text}
             handleTextChange={this.handleTextChange}
           />
         </div>
+      </div>
     );
   }
 }
