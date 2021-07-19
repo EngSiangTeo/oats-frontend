@@ -1,10 +1,13 @@
 import React from 'react';
+import Pusher from 'pusher-js';
+
 import './App.css';
 import ChatUI from './Chat/ChatUI';
 import NavBar from './Common/Nav';
 import SignInSide from './Common/SignInSide';
 import ProductList from './Product/ProductList';
 import ConversationList from './Conversation/ConversationList';
+
 
 class App extends React.Component {
 
@@ -13,13 +16,20 @@ class App extends React.Component {
     this.state = {
       token: '',
       active: '',
-      chatId: ''
+      chatId: '',
+      pusher: ''
     };
   }
 
   setToken = (token) => {
     this.setState({
       token: token
+    });
+  };
+
+  setPusher = (pusher) => {
+    this.setState({
+      pusher: pusher
     });
   };
 
@@ -31,13 +41,9 @@ class App extends React.Component {
   };
 
   renderContent() {
-    if (this.state.active === "chat") {
+    if (this.state.active === "conversation") {
       return (
-        <ChatUI token={this.state.token} chatId={this.state.chatId}/>
-      );
-    } else if (this.state.active === "conversation") {
-      return (
-        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId}/>
+        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId} pusher={this.state.pusher}/>
       );
     } else if (this.state.active === "product") {
       return (
@@ -49,7 +55,7 @@ class App extends React.Component {
   render() {
     if (!this.state.token) {
       return (
-        <SignInSide setToken={this.setToken} setActive={this.setActive}/>
+        <SignInSide setToken={this.setToken} setActive={this.setActive} setPusher={this.setPusher}/>
       );
     }
     

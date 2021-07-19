@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 class ProductList extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +43,6 @@ class ProductList extends Component {
     };
   }
 
-  
   componentDidMount() {
     var self = this;
     axios.get(process.env.REACT_APP_BE_URL + 'all-listings', {
@@ -67,11 +65,9 @@ class ProductList extends Component {
         'Authorization': `Bearer ${this.props.token}` 
       }
     }).then(function(response){
-      self.props.setActive('chat', response.data.data.chat_id)
+      self.props.setActive('conversation', response.data.data.chat_id)
     });
   }
-
-
 
   render() {
 
@@ -109,53 +105,53 @@ class ProductList extends Component {
           {this.state.products.map(product => {
             let image = images["p" + product.listing_id];
             return (
-                  <Grid item xs={12} sm={3} key={product.listing_id}>
-                    <Card className={String(product.listing_id)} style = {styles.card}>
-                      <CardActionArea>
-                        <CardHeader
-                          avatar={
-                            <Avatar aria-label="User" style={styles.avatar}>
-                              {product.username.substring(0, 1)}
-                            </Avatar>
-                          }
-                          title={product.username}
-                          subheader={<ReactTimeAgo date={Date.parse(product.listed_date)} locale="en-US" timeStyle="round-minute" />}
-                          action={
-                            <IconButton aria-label="share">
-                              <ShareIcon />
-                            </IconButton>
-                          }
-                        />
-                        <CardMedia
-                          component = "img"
-                          className={String(product.listing_id)}
-                          title={product.title}
-                          style = {styles.card.media}
-                          image = {image}
-                        >
-                        </CardMedia>
-                        <CardContent>
-                          <TextTruncate line = {1} truncateText="…" text = {product.title} element = "h5" />                            
-                          <Typography variant="h5">
-                            <b>${product.price}</b><br></br>
-                          </Typography>
-                          <TextTruncate line = {3} truncateText="…" text = {product.category} element = "p" />
-                          <TextTruncate line = {3} truncateText="…" text = {product.description} element = "p" />
-                        </CardContent>
-                      </CardActionArea>
-                      <div className={"flex-grow"} />
-                      <CardActions disableSpacing style = {styles.actions}>
-                        <IconButton aria-label="add to favorites">
-                          <FavoriteIcon />
+              <Grid item xs={12} sm={3} key={product.listing_id}>
+                <Card className={String(product.listing_id)} style = {styles.card}>
+                  <CardActionArea>
+                    <CardHeader
+                      avatar={
+                        <Avatar aria-label="User" style={styles.avatar}>
+                          {product.username.substring(0, 1)}
+                        </Avatar>
+                      }
+                      title={product.username}
+                      subheader={<ReactTimeAgo date={Date.parse(product.listed_date)} locale="en-US" timeStyle="round-minute" />}
+                      action={
+                        <IconButton aria-label="share">
+                          <ShareIcon />
                         </IconButton>
-                      </CardActions>
-                      <CardActions disableSpacing style={styles.chat}>
-                        <IconButton aria-label="share" onClick={this.handleChatClick.bind(this,product.listing_id)}>
-                          <ChatBubbleIcon />
-                        </IconButton>
-                      </CardActions>
-                    </Card>
-                  </Grid>
+                      }
+                    />
+                    <CardMedia
+                      component = "img"
+                      className={String(product.listing_id)}
+                      title={product.title}
+                      style = {styles.card.media}
+                      image = {image}
+                    >
+                    </CardMedia>
+                    <CardContent>
+                      <TextTruncate line = {1} truncateText="…" text = {product.title} element = "h5" />                            
+                      <Typography variant="h5">
+                        <b>${product.price}</b><br></br>
+                      </Typography>
+                      <TextTruncate line = {3} truncateText="…" text = {product.category} element = "p" />
+                      <TextTruncate line = {3} truncateText="…" text = {product.description} element = "p" />
+                    </CardContent>
+                  </CardActionArea>
+                  <div className={"flex-grow"} />
+                  <CardActions disableSpacing style = {styles.actions}>
+                    <IconButton aria-label="add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                  </CardActions>
+                  <CardActions disableSpacing style={styles.chat}>
+                    <IconButton aria-label="share" onClick={this.handleChatClick.bind(this,product.listing_id)}>
+                      <ChatBubbleIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              </Grid>
             );
           })}
           </Grid>
