@@ -79,19 +79,20 @@ export default function SignInSide({ setToken, setActive, setPusher }) {
       "email" : username,
       "password" : password
     });
+    console.log(token);
 
-    if (token.errors){
-      console.log('Error Logging In');
-    }else {
-      setToken(token.access_token);
-      setActive('product');
+    // if (token.errors){
+    //   console.log('Error Logging In');
+    // }else {
+    //   setToken(token.access_token);
+    //   setActive('product');
 
-      let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-        cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
-        encrypted: true
-      });
-      setPusher(pusher);
-    }
+    //   let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+    //     cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
+    //     encrypted: true
+    //   });
+    //   setPusher(pusher);
+    // }
   }
 
   const classes = useStyles();
