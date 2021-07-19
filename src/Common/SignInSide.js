@@ -84,7 +84,7 @@ export default function SignInSide({ setToken, setActive, setPusher }) {
       console.log('Error Logging In');
     }else {
       setToken(token.access_token);
-      setActive('conversation');
+      setActive('product');
 
       let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
         cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
