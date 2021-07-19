@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Pusher from 'pusher-js';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import './ChatUI.css';
@@ -95,6 +94,8 @@ class ChatUI extends Component {
             alert('Negative Message Detected');
           }
         });
+
+
 
     } else {
       this.setState({ text: e.target.value });

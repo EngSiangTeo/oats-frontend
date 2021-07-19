@@ -1,8 +1,6 @@
 import React from 'react';
-import Pusher from 'pusher-js';
 
 import './App.css';
-import ChatUI from './Chat/ChatUI';
 import NavBar from './Common/Nav';
 import SignInSide from './Common/SignInSide';
 import ProductList from './Product/ProductList';
