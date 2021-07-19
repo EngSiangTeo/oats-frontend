@@ -69,7 +69,7 @@ export default function ConversationList(props) {
           {conversations.map(conversation => {
             let image = images["p" + conversation.listing_id];
             return (
-              <Card key={conversation.chat_id} className={`${classes.root} ${chat == conversation.chat_id ? "active" : ""}`} onClick={(e)=>{setChat(conversation.chat_id);}}>
+              <Card key={conversation.chat_id} className={`${classes.root} ${chat === conversation.chat_id ? "active" : ""}`} onClick={(e)=>{setChat(conversation.chat_id);}}>
                   <Avatar aria-label="User" className={classes.avatar}>
                     {conversation.participants.length === 0 ? "" : conversation.participants.map(participant => {
                       return (

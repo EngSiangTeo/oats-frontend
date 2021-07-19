@@ -6,7 +6,7 @@
   position: relative;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   display: table;
 }
 
@@ -23,4 +23,11 @@
 
 .other{
   background-color: #ffffff;
+}
+
+.system{
+  margin-left: auto !important;
+  margin-right: auto !important;
+  color: red;
+  font-size: 0.6em;
 }
