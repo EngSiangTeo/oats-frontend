@@ -110,7 +110,7 @@ export default function ConversationList(props) {
       </Grid>
       <Grid item xs={12} sm={6} md={6}>
         {chat ? (
-          <ChatUI key={chat} pusher={props.pusher} token={props.token} chatId={chat}/>
+          <ChatUI key={chat} pusher={props.pusher} token={props.token} chatId={chat} ban_period={props.ban_period}/>
         ) : (
           <p>Please select a message to start</p>
         )}
