@@ -81,6 +81,19 @@ export default function Chat(props) {
     }
   }
 
+  const handleOfferBtn = (id,status) => {
+    console.log(id,status);
+    axios.post(process.env.REACT_APP_BE_URL + 'message/sellerUpdate/' + id + '/' + status, null ,{
+      headers: {
+        'Authorization': `Bearer ${props.token}` 
+      }
+    }).then(function(response){
+      if(response.data.data.length){
+        setChats([...response.data.data]);
+      }
+    });
+  }
+
   useEffect(() => {
     //Connect and subscribe to PUSHER API
     const channel = props.pusher.subscribe('chat'+props.chatId);
@@ -134,7 +147,7 @@ export default function Chat(props) {
         </Card>
       </div>
       <div className="ChatList">
-        <ChatList chats={chats} />
+        <ChatList chats={chats} handleOfferBtn={handleOfferBtn}/>
       </div>
       <div className="ChatBox">
         <ChatBox
