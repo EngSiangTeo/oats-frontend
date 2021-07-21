@@ -23,7 +23,7 @@ class ChatList extends React.Component {
         <div className="container chatList">
           {this.props.chats.map(chat => {
             return (
-              <div key={chat.id}>
+              <div className="messages" key={chat.id}>
                 <div className="row">
                   <div className={`chatMessage ${chat.own_message ? "own" : "other"}`}>
                     <div className="box">

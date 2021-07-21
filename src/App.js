@@ -15,7 +15,9 @@ class App extends React.Component {
       token: '',
       active: '',
       chatId: '',
-      pusher: ''
+      pusher: '',
+      username : '',
+      ban_period: null
     };
   }
 
@@ -38,10 +40,17 @@ class App extends React.Component {
     });
   };
 
+  setNameAndBan = (name, ban) =>{
+    this.setState({
+      username: name,
+      ban_period: ban
+    });
+  };
+
   renderContent() {
     if (this.state.active === "conversation") {
       return (
-        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId} pusher={this.state.pusher}/>
+        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId} pusher={this.state.pusher} ban_period={this.state.ban_period}/>
       );
     } else if (this.state.active === "product") {
       return (
@@ -53,15 +62,14 @@ class App extends React.Component {
   render() {
     if (!this.state.token) {
       return (
-        <SignInSide setToken={this.setToken} setActive={this.setActive} setPusher={this.setPusher}/>
+        <SignInSide setToken={this.setToken} setActive={this.setActive} setPusher={this.setPusher} setNameAndBan={this.setNameAndBan}/>
       );
     }
     
     return (
       <div className="App">
         <header className="App-header">
-          {/*<h1 className="App-title">Navbar or something</h1>*/}
-          <NavBar setActive={this.setActive}/>
+          <NavBar setActive={this.setActive} username={this.state.username}/>
         </header>
         <div className="App-content">
           {this.renderContent()}
