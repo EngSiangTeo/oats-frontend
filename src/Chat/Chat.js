@@ -82,7 +82,6 @@ export default function Chat(props) {
   }
 
   const handleOfferBtn = (id,status) => {
-    console.log(id,status);
     axios.post(process.env.REACT_APP_BE_URL + 'message/sellerUpdate/' + id + '/' + status, null ,{
       headers: {
         'Authorization': `Bearer ${props.token}` 
@@ -97,7 +96,6 @@ export default function Chat(props) {
   useEffect(() => {
     //Connect and subscribe to PUSHER API
     const channel = props.pusher.subscribe('chat'+props.chatId);
-    console.log(props.pusher.connection.socket_id);
     channel.bind('MessageSent', data => {
       setChats(chats=>[...chats, data]);
     });
@@ -117,8 +115,7 @@ export default function Chat(props) {
     });
 
     return () => {
-      //Unsubscribe to PUSHER API
-      console.log('bue');
+      //Unsubscribe to PUSHER API channel
       props.pusher.unsubscribe('chat'+props.chatId);
     }
   }, []);
@@ -152,6 +149,7 @@ export default function Chat(props) {
       <div className="ChatBox">
         <ChatBox
           text={text}
+          ban_period={props.ban_period}
           handleTextChange={handleTextChange}
         />
       </div>
