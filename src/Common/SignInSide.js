@@ -17,7 +17,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Oats Hackathon
+        Team Oats
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -68,7 +68,7 @@ async function loginUser(credentials) {
    .then(data => data.json());
 }
 
-export default function SignInSide({ setToken, setActive, setPusher }) {
+export default function SignInSide({ setToken, setActive, setPusher, setNameAndBan }) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -89,6 +89,7 @@ export default function SignInSide({ setToken, setActive, setPusher }) {
         encrypted: true
       });
       setPusher(pusher);
+      setNameAndBan(token.username, token.ban_period);
       setActive('product');
     }
   }

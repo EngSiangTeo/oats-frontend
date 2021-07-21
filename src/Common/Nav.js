@@ -20,15 +20,14 @@ class NavBar extends Component {
           <Nav className="me-auto">
             <Nav.Link onClick={this.handleChatClick.bind(this,'product')}>Listing</Nav.Link>
             <Nav.Link onClick={this.handleChatClick.bind(this,'conversation')}>Chat</Nav.Link>
-           
           </Nav>
           <Nav className="ml-auto">
-           <NavDropdown title="Profile" id="collasible-nav-dropdown">
-              <NavDropdown.Item>Action</NavDropdown.Item>
+           <NavDropdown title={this.props.username} id="collasible-nav-dropdown">
+              {/*<NavDropdown.Item>Action</NavDropdown.Item>
               <NavDropdown.Item>Another action</NavDropdown.Item>
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item>Something</NavDropdown.Item>*/}
               <NavDropdown.Divider />
-              <NavDropdown.Item>Separated link</NavDropdown.Item>
+                <NavDropdown.Item href="/">Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
