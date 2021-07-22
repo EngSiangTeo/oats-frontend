@@ -34,13 +34,31 @@ class ChatList extends React.Component {
                 <div className="row">
                   {(chat.system_offer && chat.own_message && chat.seller_offer !== -1) ? (
                     <div className="system">
-                      <b>Your offer is a bit low, your CarouPoints will be deducted if the seller deem the offer not reasonable</b>
+                      <b className="warning">Your offer is a bit low, your CarouPoints will be deducted if the seller deem the offer not reasonable</b>
+                    </div>
+                    ) : ""
+                  }
+                  {(chat.own_message && chat.seller_offer === 1) ? (
+                    <div className="system">
+                      <b className="good">Seller has deem this as an valid offer. CarouPoints will not be deducted</b>
+                    </div>
+                    ) : ""
+                  }
+                  {(chat.own_message && chat.seller_offer === 0) ? (
+                    <div className="system">
+                      <b className="warning">Seller has deem this as an unreasonable offer. CarouPoints will be deducted.</b>
+                    </div>
+                    ) : ""
+                  }
+                  {(chat.own_message && chat.seller_offer === -1) ? (
+                    <div className="system">
+                      <b>Seller has deem this as not an offer. CarouPoints will not be deducted. We will continue to work and improve our system. We apologise for any inconveniences caused.</b>
                     </div>
                     ) : ""
                   }
                   {chat.system_offer && !chat.own_message ? (
                     <div className="system">
-                      <b>System detected low offer from buyer</b>
+                      <b className="warning">System detected low offer from buyer</b>
                       <div className="systemMessage">
                         <Button variant="outline-secondary" disabled>Is this a reasonable offer?</Button>
                       </div>
