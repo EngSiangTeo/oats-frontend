@@ -89,7 +89,7 @@ export default function SignInSide({ setToken, setActive, setPusher, setNameAndB
         encrypted: true
       });
       setPusher(pusher);
-      setNameAndBan(token.username, token.ban_period);
+      setNameAndBan(token.username, token.user_id, token.ban_period);
       setActive('product');
     }
   }
