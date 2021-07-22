@@ -55,7 +55,7 @@ export default function Chat(props) {
       };
       
       //Send to BE for BROADCAST
-      axios.post(process.env.REACT_APP_BE_URL + 'message/' + props.chatId, payload, {
+      axios.post(process.env.REACT_APP_BE_URL + 'messageAsync/' + props.chatId, payload, {
         headers: {
           'Authorization': `Bearer ${props.token}` ,          
           'X-Socket-ID' : props.pusher.connection.socket_id,
@@ -82,6 +82,7 @@ export default function Chat(props) {
   }
 
   const handleOfferBtn = (id,status) => {
+    console.log(id);
     axios.post(process.env.REACT_APP_BE_URL + 'message/sellerUpdate/' + id + '/' + status, null ,{
       headers: {
         'Authorization': `Bearer ${props.token}` 
@@ -98,6 +99,20 @@ export default function Chat(props) {
     const channel = props.pusher.subscribe('chat'+props.chatId);
     channel.bind('MessageSent', data => {
       setChats(chats=>[...chats, data]);
+    });
+
+    //Connect to user individual channel
+    const userchannel = props.pusher.subscribe('chat'+props.chatId+'user'+props.userId);
+    userchannel.bind('UpdateChat', data => {
+      axios.get(process.env.REACT_APP_BE_URL + 'message/' + props.chatId, {
+        headers: {
+          'Authorization': `Bearer ${props.token}` 
+        }
+      }).then(function(response){
+        if(response.data.data.messages.length){
+          setChats([...response.data.data.messages]);          
+        }
+      });
     });
     //Get all chat history
     axios.get(process.env.REACT_APP_BE_URL + 'message/' + props.chatId, {
@@ -117,6 +132,7 @@ export default function Chat(props) {
     return () => {
       //Unsubscribe to PUSHER API channel
       props.pusher.unsubscribe('chat'+props.chatId);
+      props.pusher.unsubscribe('chat'+props.chatId+'user'+props.userId);
     }
   }, []);
 

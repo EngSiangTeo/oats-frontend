@@ -17,6 +17,7 @@ class App extends React.Component {
       chatId: '',
       pusher: '',
       username : '',
+      userId : '',
       ban_period: null
     };
   }
@@ -40,9 +41,10 @@ class App extends React.Component {
     });
   };
 
-  setNameAndBan = (name, ban) =>{
+  setNameAndBan = (name, userid, ban) =>{
     this.setState({
       username: name,
+      userId: userid,
       ban_period: ban
     });
   };
@@ -50,7 +52,7 @@ class App extends React.Component {
   renderContent() {
     if (this.state.active === "conversation") {
       return (
-        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId} pusher={this.state.pusher} ban_period={this.state.ban_period}/>
+        <ConversationList token={this.state.token} setActive={this.setActive} chatId={this.state.chatId} pusher={this.state.pusher} userId = {this.state.userId} ban_period={this.state.ban_period}/>
       );
     } else if (this.state.active === "product") {
       return (
