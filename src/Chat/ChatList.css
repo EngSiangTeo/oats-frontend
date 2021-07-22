@@ -33,8 +33,15 @@
 }
 
 .system b {
-  color: red;
   font-size: 0.6em;
+}
+
+.system .warning{
+  color: red;
+}
+
+.system .good{
+  color: green;
 }
 
 .systemMessage button{
