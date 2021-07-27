@@ -96,7 +96,6 @@ export default function Chat(props) {
     });
 
     //Connect to user individual channel
-    const userchannel = props.pusher.subscribe('chat'+props.chatId+'user'+props.userId);
     channel.bind('UpdateChat', data => {
       axios.get(process.env.REACT_APP_BE_URL + 'message/' + props.chatId, {
         headers: {
@@ -126,7 +125,6 @@ export default function Chat(props) {
     return () => {
       //Unsubscribe to PUSHER API channel
       props.pusher.unsubscribe('chat'+props.chatId);
-      props.pusher.unsubscribe('chat'+props.chatId+'user'+props.userId);
     }
   }, []);
 
