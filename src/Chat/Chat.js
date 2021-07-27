@@ -48,12 +48,6 @@ export default function Chat(props) {
         message: text
       };
 
-      const message = {
-        body : {
-          "text": text
-        }
-      };
-      
       //Send to BE for BROADCAST
       axios.post(process.env.REACT_APP_BE_URL + 'messageAsync/' + props.chatId, payload, {
         headers: {
@@ -66,13 +60,13 @@ export default function Chat(props) {
       });
 
       //Send to Lambda for analysis
-      axios.put(process.env.REACT_APP_SENTIMENT_URL, message, {
+      axios.put(process.env.REACT_APP_SENTIMENT_URL, payload, {
         headers : {
           'Content-Type': 'application/json',
         }
       }).then(function(response){
         if (response.data.body.Sentiment === "NEGATIVE") {
-          alert('Negative Message Detected');
+          alert('Negative Message Detected. Please refrain from such negative remarks. Caroupoint will be deducted.');
         }
       });
 
@@ -103,7 +97,7 @@ export default function Chat(props) {
 
     //Connect to user individual channel
     const userchannel = props.pusher.subscribe('chat'+props.chatId+'user'+props.userId);
-    userchannel.bind('UpdateChat', data => {
+    channel.bind('UpdateChat', data => {
       axios.get(process.env.REACT_APP_BE_URL + 'message/' + props.chatId, {
         headers: {
           'Authorization': `Bearer ${props.token}` 

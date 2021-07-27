@@ -32,6 +32,12 @@ class ChatList extends React.Component {
                   </div>
                 </div>
                 <div className="row">
+                  {(chat.own_message && chat.sentiment === "NEGATIVE") ? (
+                    <div className="system">
+                      <b className="warning">1 CarouPoint has been deducted for your unpleasant remark</b>
+                    </div>
+                    ) : ""
+                  }
                   {(chat.system_offer && chat.own_message && chat.seller_offer !== -1) ? (
                     <div className="system">
                       <b className="warning">Your offer is a bit low, your CarouPoints will be deducted if the seller deem the offer not reasonable</b>
