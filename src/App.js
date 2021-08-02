@@ -71,7 +71,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <NavBar setActive={this.setActive} username={this.state.username}/>
+          <NavBar setActive={this.setActive} username={this.state.username} token={this.state.token} />
         </header>
         <div className="App-content">
           {this.renderContent()}
