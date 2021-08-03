@@ -92,6 +92,7 @@ export default function SignInSide({ setToken, setActive, setPusher, setNameAndB
       const channel = pusher.subscribe('user'+token.user_id);
       channel.bind('UpdateBan', data => {
         setNameAndBan(token.username, token.user_id, data.ban_period);
+        setPoint(data.caroupoint);
       });
 
       channel.bind('UpdatePoint', data => {
