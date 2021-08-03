@@ -68,7 +68,7 @@ async function loginUser(credentials) {
    .then(data => data.json());
 }
 
-export default function SignInSide({ setToken, setActive, setPusher, setNameAndBan }) {
+export default function SignInSide({ setToken, setActive, setPusher, setNameAndBan, setPoints}) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -88,8 +88,20 @@ export default function SignInSide({ setToken, setActive, setPusher, setNameAndB
         cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
         encrypted: true
       });
+
+      const channel = pusher.subscribe('user'+token.user_id);
+      channel.bind('UpdateBan', data => {
+        setNameAndBan(token.username, token.user_id, data.ban_period);
+      });
+
+      channel.bind('UpdatePoint', data => {
+        setPoints(data.caroupoint);
+      });
+
       setPusher(pusher);
       setNameAndBan(token.username, token.user_id, token.ban_period);
+      console.log(token);
+      setPoints(token.points);
       setActive('product');
     }
   }

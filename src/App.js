@@ -18,6 +18,7 @@ class App extends React.Component {
       pusher: '',
       username : '',
       userId : '',
+      points : 0,
       ban_period: null
     };
   }
@@ -49,6 +50,12 @@ class App extends React.Component {
     });
   };
 
+  setPoints = (points) =>{
+    this.setState({
+      points: points
+    });
+  };
+
   renderContent() {
     if (this.state.active === "conversation") {
       return (
@@ -64,14 +71,14 @@ class App extends React.Component {
   render() {
     if (!this.state.token) {
       return (
-        <SignInSide setToken={this.setToken} setActive={this.setActive} setPusher={this.setPusher} setNameAndBan={this.setNameAndBan}/>
+        <SignInSide setToken={this.setToken} setActive={this.setActive} setPusher={this.setPusher} setNameAndBan={this.setNameAndBan} setPoints={this.setPoints}/>
       );
     }
     
     return (
       <div className="App">
         <header className="App-header">
-          <NavBar setActive={this.setActive} username={this.state.username}/>
+          <NavBar setActive={this.setActive} username={this.state.username} caroupoints={this.state.points}/>
         </header>
         <div className="App-content">
           {this.renderContent()}
