@@ -112,7 +112,7 @@ class ProductList extends Component {
                           {product.username.substring(0, 1)}
                         </Avatar>
                       }
-                      title={product.username}
+                      title={product.username} 
                       subheader={<ReactTimeAgo date={Date.parse(product.listed_date)} locale="en-US" timeStyle="round-minute" />}
                       action={
                         <IconButton aria-label="share">
@@ -128,6 +128,8 @@ class ProductList extends Component {
                       image = {image}
                     >
                     </CardMedia>
+                    <br></br>
+                      {product.deprioritized == 1 && <span class ='ml-2 mt-3 p-1 text-light bg-secondary rounded-top rounded-bottom'><small>Deprioritized Listing</small></span>}
                     <CardContent>
                       <TextTruncate line = {1} truncateText="…" text = {product.title} element = "h5" />                            
                       <Typography variant="h5">
