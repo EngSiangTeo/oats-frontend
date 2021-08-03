@@ -73,8 +73,8 @@ class NavBar extends Component {
             <Nav.Link style={{color:'white'}}>Caroupoint: {this.state.user[0].caroupoint}</Nav.Link>
            <NavDropdown id="collasible-nav-dropdown">
               {/*<NavDropdown.Item>Action</NavDropdown.Item>
-              <NavDropdown.Item>Another action</NavDropdown.Item>
-              <NavDropdown.Item>Something</NavDropdown.Item>*/}
+              <NavDropdown.Item>Another action</NavDropdown.Item>*/}
+              <NavDropdown.Item>Caroupoints: {this.props.caroupoints}</NavDropdown.Item>
               <NavDropdown.Divider />
                 <NavDropdown.Item href="/">Logout</NavDropdown.Item>
             </NavDropdown>
