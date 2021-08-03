@@ -24,8 +24,8 @@ class NavBar extends Component {
           <Nav className="ml-auto">
            <NavDropdown title={this.props.username} id="collasible-nav-dropdown">
               {/*<NavDropdown.Item>Action</NavDropdown.Item>
-              <NavDropdown.Item>Another action</NavDropdown.Item>
-              <NavDropdown.Item>Something</NavDropdown.Item>*/}
+              <NavDropdown.Item>Another action</NavDropdown.Item>*/}
+              <NavDropdown.Item>Caroupoints: {this.props.caroupoints}</NavDropdown.Item>
               <NavDropdown.Divider />
                 <NavDropdown.Item href="/">Logout</NavDropdown.Item>
             </NavDropdown>
