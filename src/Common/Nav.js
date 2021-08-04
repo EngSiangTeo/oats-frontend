@@ -35,8 +35,6 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log(this.state.user[0]);
-    console.log(this.state.user[0]);
     const styles = {
       avatar: {
         backgroundColor: red[500],
