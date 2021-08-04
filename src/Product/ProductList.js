@@ -73,7 +73,8 @@ class ProductList extends Component {
         card: {
           minWidth:100,
           maxWidth: 300,
-          height: 585,
+          minHeight: 600,
+          height: 650,
           padding: 2,
           textAlign: 'start',
           media: {
