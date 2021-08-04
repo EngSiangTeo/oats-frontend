@@ -70,7 +70,7 @@ class NavBar extends Component {
                           {this.state.user[0].username.substring(0, 1)}
             </Avatar>
             <Nav.Link style={{color:'white'}}>Hello, {this.state.user[0].username}</Nav.Link>
-            <Nav.Link style={{color:'white'}}>Caroupoint: {this.props.caroupoints}</Nav.Link>
+            <Nav.Link style={{color:'white'}}>Caroupoints: {this.props.caroupoints}</Nav.Link>
             <Nav.Link style={{color:'white'}} href="/">Logout</Nav.Link>
           </Nav>
         </Navbar.Collapse>
